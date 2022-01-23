@@ -27,8 +27,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'library',
-]
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google'
 
+]
+Authentication_Backend=[
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -108,6 +117,19 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+SITE_ID= 3
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '160103752952-6o556hdon241q0didvs3kljuobsadfs8.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        }
+    }
+}
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'library/media')
 MEDIA_URL = '/media/'

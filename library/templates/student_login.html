@@ -1,5 +1,6 @@
 {% extends 'basic.html' %}
 {% load static %}
+{% load socialaccount %}
 {% block title %} Library Management System {% endblock %}
 {% block css %}
 {% endblock %}
@@ -22,7 +23,8 @@
             <input type="password" class="form-control mt-2" name="password" placeholder="Enter Password" required>
         </div>
     </div>
-    <button type="submit" class="btn btn-outline-primary mt-4">Login</button>
+
+    <button type="submit" class="btn btn-outline-primary mt-4" href="{% provider_login_url 'google' %}">Login</button>
 </div>
 {% endblock %}
 {% block js %}

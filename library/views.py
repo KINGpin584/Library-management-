@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     return render(request, "index.html")
 
-@login_required(login_url = '/admin_login')
+@login_required(login_url = '/admin_login' or 'Librarian_login')
 def add_book(request):
     if request.method == "POST":
         name = request.POST['name']
@@ -24,17 +24,17 @@ def add_book(request):
         return render(request, "add_book.html", {'alert':alert})
     return render(request, "add_book.html")
 
-@login_required(login_url = '/admin_login')
+@login_required(login_url = '/admin_login' or '/Librarian_login')
 def view_books(request):
     books = Book.objects.all()
     return render(request, "view_books.html", {'books':books})
 
-@login_required(login_url = '/admin_login')
+@login_required(login_url = '/admin_login' or '/Librarian_login')
 def view_students(request):
     students = Student.objects.all()
     return render(request, "view_students.html", {'students':students})
 
-@login_required(login_url = '/admin_login')
+@login_required(login_url = '/admin_login' or '/Librarian_login')
 def issue_book(request):
     form = forms.IssueBookForm()
     if request.method == "POST":
@@ -152,7 +152,6 @@ def student_registration(request):
         email = request.POST['email']
         phone = request.POST['phone']
         branch = request.POST['branch']
-        classroom = request.POST['classroom']
         roll_no = request.POST['roll_no']
         image = request.FILES['image']
         password = request.POST['password']
@@ -163,30 +162,29 @@ def student_registration(request):
             return render(request, "student_registration.html", {'passnotmatch':passnotmatch})
 
         user = User.objects.create_user(username=username, email=email, password=password,first_name=first_name, last_name=last_name)
-        student = Student.objects.create(user=user, phone=phone, branch=branch, classroom=classroom,roll_no=roll_no, image=image)
+        student = Student.objects.create(user=user, phone=phone, branch=branch,roll_no=roll_no, image=image)
         user.save()
         student.save()
         alert = True
         return render(request, "student_registration.html", {'alert':alert})
     return render(request, "student_registration.html")
 
-def student_login(request):
+
+def Librarian_login(request):
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
-
         if user is not None:
             login(request, user)
             if request.user.is_superuser:
-                return HttpResponse("You are not a student!!")
+                return HttpResponse("You are not a librarian!!")
             else:
-                return redirect("/profile")
+                return redirect("/add_book")
         else:
             alert = True
-            return render(request, "student_login.html", {'alert':alert})
-    return render(request, "student_login.html")
-
+            return render(request, "Librarian_login.html", {'alert':alert})
+    return render(request, "Librarian_login.html")
 def admin_login(request):
     if request.method == "POST":
         username = request.POST['username']

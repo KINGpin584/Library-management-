@@ -1,10 +1,12 @@
 {% extends 'basic.html' %}
+{% csrf_token %}
 {% load static %}
+{% load socialaccount %}
 {% block title %} Library Management System {% endblock %}
 {% block css %}
 {% endblock %}
 {% block body %}
-<div class="p-4 bg-light">
+<div class="p-4 bg-light" >
     <div class="container-fluid py-3">
       <h1 class="display-5 fw-bold">Welcome to  Library Management System</h1>
       <p class="col-md-8 fs-4">You can register as student. You will be able to issue any book thorugh the admin. After that you need to return the book within 14 days or else a fine of Rs 10 will be charged per day till the book is returned.</p>
@@ -18,10 +20,14 @@
       <img src="{% static 'admin.png' %}" width="50%" height="50%" alt=""><br><br>
         <a class="btn btn-outline-primary btn-lg" style="text-align:center" href="/admin_login/">Admin</a>
     </div>
+    <div class="col-lg-6">
+      <img src="{% static 'admin.png' %}" width="50%" height="50%" alt=""><br><br>
+        <a class="btn btn-outline-primary btn-lg" style="text-align:center" href="/Librarian_login/">Librarian</a>
+    </div>
 
     <div class="col-lg-6">
       <img src="{% static 'students.png' %}" width="50%" height="50%" alt=""><br><br>
-      <a class="btn btn-outline-primary btn-lg" href="/student_login/">Student</a>
+      <a class="btn btn-outline-primary btn-lg" href="{% provider_login_url 'google' %}">Student</a>
     </div>
   </div>
   </div>

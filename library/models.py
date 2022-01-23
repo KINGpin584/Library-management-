@@ -14,15 +14,23 @@ class Book(models.Model):
 
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    classroom = models.CharField(max_length=10)
+    Hostel = models.CharField(max_length=10)
     branch = models.CharField(max_length=10)
     roll_no = models.CharField(max_length=3, blank=True)
     phone = models.CharField(max_length=10, blank=True)
     image = models.ImageField(upload_to="", blank=True)
 
     def __str__(self):
-        return str(self.user) + " ["+str(self.branch)+']' + " ["+str(self.classroom)+']' + " ["+str(self.roll_no)+']'
+        return str(self.user) + " ["+str(self.branch)+']' + " ["+str(self.Hostel)+']' + " ["+str(self.roll_no)+']'
+class Librarian(models.Model):
+    username = models.CharField(max_length=50, blank=False )
+    password = models.CharField(max_length=12, blank= False)
+    branch = models.CharField(max_length=10)
+    phone = models.CharField(max_length=10, blank=True)
+    image = models.ImageField(upload_to="", blank=True)
 
+    def __str__(self):
+        return str(self.username) + " ["+str(self.branch)+']'
 
 def expiry():
     return datetime.today() + timedelta(days=14)
