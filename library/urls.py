@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     path("", views.index, name="index"),
     path("add_book/", views.add_book, name="add_book"),
+    path("profile/", views.profile, name="profile"),
     path("view_books/", views.view_books, name="view_books"),
     path("view_students/", views.view_students, name="view_students"),
     path("issue_book/", views.issue_book, name="issue_book"),
@@ -16,7 +17,6 @@ urlpatterns = [
     path("accounts/",include('allauth.urls') ,name="student_login",),
     path("admin_login/", views.admin_login, name="admin_login"),
     path("logout/", views.Logout, name="logout"),
-    path("Librarian_login/", views.Librarian_login, name="Librarian_login"),
     path("delete_book/<int:myid>/", views.delete_book, name="delete_book"),
     path("delete_student/<int:myid>/", views.delete_student, name="delete_student"),
     #path("student_login/",  name="student_login",),

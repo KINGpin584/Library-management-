@@ -22,15 +22,6 @@ class Student(models.Model):
 
     def __str__(self):
         return str(self.user) + " ["+str(self.branch)+']' + " ["+str(self.Hostel)+']' + " ["+str(self.roll_no)+']'
-class Librarian(models.Model):
-    username = models.CharField(max_length=50, blank=False )
-    password = models.CharField(max_length=12, blank= False)
-    branch = models.CharField(max_length=10)
-    phone = models.CharField(max_length=10, blank=True)
-    image = models.ImageField(upload_to="", blank=True)
-
-    def __str__(self):
-        return str(self.username) + " ["+str(self.branch)+']'
 
 def expiry():
     return datetime.today() + timedelta(days=14)
@@ -39,3 +30,13 @@ class IssuedBook(models.Model):
     isbn = models.CharField(max_length=13)
     issued_date = models.DateField(auto_now=True)
     expiry_date = models.DateField(default=expiry)
+
+class Review(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book,related_name="Reviews" ,on_delete=models.CASCADE)
+    body = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title + '%s - %s ' % (self.Book.name, self.user.name)
+        
