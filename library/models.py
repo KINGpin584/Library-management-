@@ -14,7 +14,7 @@ class Book(models.Model):
 
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    Hostel = models.CharField(max_length=10)
+    hostel = models.CharField(max_length=10)
     branch = models.CharField(max_length=10)
     roll_no = models.CharField(max_length=3, blank=True)
     phone = models.CharField(max_length=10, blank=True)
@@ -26,17 +26,19 @@ class Student(models.Model):
 def expiry():
     return datetime.today() + timedelta(days=14)
 class IssuedBook(models.Model):
+    
     student_id = models.CharField(max_length=100, blank=True) 
     isbn = models.CharField(max_length=13)
     issued_date = models.DateField(auto_now=True)
     expiry_date = models.DateField(default=expiry)
+    #book = models.ForeignKey(Book,related_name="Reviews" ,on_delete=models.CASCADE)
+    #user = models.ForeignKey(User, on_delete=models.CASCADE)
+#class Review(models.Model):
+   # pass
+    #user = models.ForeignKey(User, on_delete=models.CASCADE)
+    #book1 = models.ForeignKey(Book,related_name="Reviews" ,on_delete=models.CASCADE)
+    #body = models.TextField()
+    #date_added = models.DateTimeField(auto_now_add=True)
 
-class Review(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    book = models.ForeignKey(Book,related_name="Reviews" ,on_delete=models.CASCADE)
-    body = models.TextField()
-    date_added = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.title + '%s - %s ' % (self.Book.name, self.user.name)
-        
+    #def __str__(self):
+        #return self.title + '%s - %s ' % (self.Book.name, self.user.name)
